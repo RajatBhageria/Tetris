@@ -1,0 +1,24 @@
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Shape;
+
+import javax.swing.*;
+
+
+public class Long extends JComponent{
+	
+	public void paintComponent(Graphics gc) 
+	{ 
+		super.paintComponent(gc);
+	}
+	public Dimension getPreferredSize() 
+	{
+		return new Dimension(600,400); 
+	}
+	
+	public Long()
+	{ 
+		super();
+		setBackground(Color.WHITE); 
+	}
+}

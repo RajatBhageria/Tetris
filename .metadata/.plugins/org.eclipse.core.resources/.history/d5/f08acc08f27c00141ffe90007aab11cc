@@ -1,0 +1,7 @@
+import java.awt.*;
+
+public abstract class Block {
+
+	public void draw(Graphics g);
+	
+}

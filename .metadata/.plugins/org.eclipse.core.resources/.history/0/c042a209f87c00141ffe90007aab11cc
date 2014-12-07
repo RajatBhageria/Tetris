@@ -1,0 +1,20 @@
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Block {
+
+	public Block(){
+		
+	}
+	private ArrayList<Block> blocks = new ArrayList<Block>();
+	private enum minos {LONG, BLOCK, MIDDLE, RTAIL, LTAIL, LSTAIR, RSTAIR}
+	
+	public Block randomBlock()
+	{
+		Random x = new Random();
+		int i = x.nextInt(0);
+		return (Block) blocks.get(i);
+	}
+	
+}

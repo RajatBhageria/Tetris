@@ -1,0 +1,5 @@
+
+
+public enum Mino {
+	LONG, BLOCK, MIDDLE, RTAIL, LTAIL, LSTAIR, RSTAIR
+}

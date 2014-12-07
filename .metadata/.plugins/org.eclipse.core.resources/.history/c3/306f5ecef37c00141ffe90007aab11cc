@@ -1,0 +1,12 @@
+import java.awt.*;
+
+public class Block {
+
+	public Block(){
+		
+	}
+	
+	private enum minos {LONG, BLOCK, MIDDLE, RTAIL, LTAIL, LSTAIR, RSTAIR}
+	
+	
+}

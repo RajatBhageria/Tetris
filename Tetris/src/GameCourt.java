@@ -6,8 +6,12 @@
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * GameCourt
@@ -24,23 +28,14 @@ public class GameCourt extends JPanel {
 	public boolean playing = false; // whether the game is running
 	private JLabel status; // Current status text (i.e. Running...)
 
-	// Game constants
 	public static final int COURT_WIDTH = 300;
 	public static final int COURT_HEIGHT = 300;
-	public static final int SQUARE_VELOCITY = 4;
-	// Update interval for timer, in milliseconds
 	public static final int INTERVAL = 35;
 
 	public GameCourt(JLabel status) {
 		// creates border around the court area, JComponent method
 		setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-		// The timer is an object which triggers an action periodically
-		// with the given INTERVAL. One registers an ActionListener with
-		// this timer, whose actionPerformed() method will be called
-		// each time the timer triggers. We define a helper method
-		// called tick() that actually does everything that should
-		// be done in a single timestep.
 		Timer timer = new Timer(INTERVAL, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tick();
@@ -48,16 +43,10 @@ public class GameCourt extends JPanel {
 		});
 		timer.start(); // MAKE SURE TO START THE TIMER!
 
-		// Enable keyboard focus on the court area.
-		// When this component has the keyboard focus, key
-		// events will be handled by its key listener.
 		setFocusable(true);
 
-		// This key listener allows the square to move as long
-		// as an arrow key is pressed, by changing the square's
-		// velocity accordingly. (The tick method below actually
-		// moves the square.)
 		this.status = status;
+		
 	}
 
 	/**
@@ -67,8 +56,6 @@ public class GameCourt extends JPanel {
 
 		playing = true;
 		status.setText("Running...");
-
-		// Make sure that this component has the keyboard focus
 		requestFocusInWindow();
 	}
 
@@ -78,20 +65,23 @@ public class GameCourt extends JPanel {
 	 */
 	void tick() {
 		if (playing) {
-			// advance the square and snitch in their
-			// current direction.
-			
-
-			// update the display
 			repaint();
 		}
-	}
-
+	}	
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
+		g.drawRect(100, 100, 20, 20);
 	}
+	
+	public void drawShapes(Shape e){
+		JFrame j = new JFrame();
+		j.setSize(200,200);
+        j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        j.setVisible(true);
+	}
+	
 
 	@Override
 	public Dimension getPreferredSize() {
