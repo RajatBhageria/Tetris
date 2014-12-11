@@ -3,7 +3,7 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="265" key="DIALOG_WIDTH"/>
 		<item value="37" key="DIALOG_Y_ORIGIN"/>
-		<item value="792" key="DIALOG_X_ORIGIN"/>
+		<item value="995" key="DIALOG_X_ORIGIN"/>
 		<item value="399" key="DIALOG_HEIGHT"/>
 		<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
 	</section>
@@ -13,26 +13,26 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="lines" key="selection"/>
+		<item value="print" key="selection"/>
 		<list key="findhistory">
-			<item value="lines"/>
-			<item value="TAdapter"/>
-			<item value="removeFullLines"/>
-			<item value="clearGameCourt"/>
-			<item value="drop"/>
 			<item value="print"/>
-			<item value="curY"/>
-			<item value="curX"/>
+			<item value="system"/>
+			<item value="sytem"/>
+			<item value="squareWidth()"/>
+			<item value="squareWidth"/>
+			<item value="square"/>
+			<item value="squareHeight()"/>
+			<item value="squareheight"/>
 		</list>
 		<list key="replacehistory">
+			<item value="squareWidth"/>
+			<item value="SquareHeight"/>
+			<item value="topOfGame"/>
 			<item value="Adapter"/>
 			<item value="removeFull"/>
 			<item value="clear"/>
 			<item value="currY"/>
 			<item value="currX"/>
-			<item value="table"/>
-			<item value="tgt"/>
-			<item value="started"/>
 		</list>
 	</section>
 </section>
