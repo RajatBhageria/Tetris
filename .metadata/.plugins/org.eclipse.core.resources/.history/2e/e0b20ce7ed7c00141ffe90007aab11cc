@@ -1,4 +1,0 @@
-
-public enum Mino extends GameObj{
-	LONG, BLOCK, MIDDLE, RTAIL, LTAIL, LSTAIR, RSTAIR
-}

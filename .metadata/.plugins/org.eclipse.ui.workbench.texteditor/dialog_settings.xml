@@ -2,37 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="265" key="DIALOG_WIDTH"/>
-		<item value="37" key="DIALOG_Y_ORIGIN"/>
+		<item value="42" key="DIALOG_Y_ORIGIN"/>
+		<item value="394" key="DIALOG_HEIGHT"/>
 		<item value="995" key="DIALOG_X_ORIGIN"/>
-		<item value="399" key="DIALOG_HEIGHT"/>
 		<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="true" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="print" key="selection"/>
+		<item value="Game Over" key="selection"/>
 		<list key="findhistory">
-			<item value="print"/>
-			<item value="system"/>
-			<item value="sytem"/>
-			<item value="squareWidth()"/>
+			<item value="Game Over"/>
+			<item value="Game"/>
+			<item value="game"/>
+			<item value="getStatus"/>
+			<item value="getStatusBar"/>
+			<item value="squareHeight"/>
 			<item value="squareWidth"/>
-			<item value="square"/>
-			<item value="squareHeight()"/>
-			<item value="squareheight"/>
+			<item value="statusbar"/>
 		</list>
 		<list key="replacehistory">
+			<item value="getStatus"/>
+			<item value="height"/>
+			<item value="width"/>
+			<item value="status"/>
+			<item value="squareHeight"/>
 			<item value="squareWidth"/>
-			<item value="SquareHeight"/>
-			<item value="topOfGame"/>
-			<item value="Adapter"/>
-			<item value="removeFull"/>
-			<item value="clear"/>
-			<item value="currY"/>
-			<item value="currX"/>
+			<item value="draw"/>
+			<item value="shapeInArray"/>
 		</list>
 	</section>
 </section>

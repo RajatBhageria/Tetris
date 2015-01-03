@@ -1,0 +1,21 @@
+
+public class main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+	}
+	public static String trim(String s)
+	{
+		int from =0; 
+		while (from < s.length() && Character.isWhitespace(s.charAt(from))){
+			from = from +1;
+		}
+		int to = s.length()-1;
+		
+		while (to > from && Character.isWhitespace(s.charAt(to))){
+			
+		}
+	}
+
+}

@@ -1,0 +1,26 @@
+
+public class main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println(trim("   Hello    "))
+	}
+	public static String trim(String s)
+	{
+		int from =0; 
+		while (from < s.length() && Character.isWhitespace(s.charAt(from))){
+			from = from +1;
+		}
+		int to = s.length()-1;
+		
+		while (to > from && Character.isWhitespace(s.charAt(to))){
+			to = to - 1; 
+		}
+		char[] chars = new char[to-from-1];
+		for (int i = 0; i < chars.length; i ++){
+			chars[i] = s.charAt(from +i);
+		}
+		return new String(chars);
+	}
+
+}

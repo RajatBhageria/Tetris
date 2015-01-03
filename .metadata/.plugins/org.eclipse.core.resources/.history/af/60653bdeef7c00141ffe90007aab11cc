@@ -1,8 +1,0 @@
-
-public interface Block {
-
-	public Block(){
-		
-	}
-	public 
-}

@@ -1,15 +1,6 @@
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class GameCourt extends JPanel implements ActionListener {
@@ -17,32 +8,40 @@ public class GameCourt extends JPanel implements ActionListener {
     private final int WIDTH = 10;
     private final int HEIGHT = 26;
     private Timer timer;
+    
     private boolean finishedFalling = false;
-    private boolean started = false;
+     private boolean started = false;
     private boolean paused = false;
-    private int linesRemoved = 0;
-    private int currX = 0;
+    
+     private int linesRemoved = 0;
+    private int currX = 0; 
+    
     private int currY = 0;
+     
     private JLabel statusbar;
     private Shape curr;
+    
     private Shape.Mino[] GameCourt;
 
 	/**
 	 * Constructor
-	 * @param  parent for the statusbar
+	 * @param  parent for the status
 	 * @author Rajat Bhageria
 	 */
     public GameCourt(Game parent) {
 
 	   setBorder(BorderFactory.createLineBorder(Color.BLACK));
 	   setBackground(Color.BLACK);
-       setFocusable(true);
+        setFocusable(true);
        curr = new Shape();
-       timer = new Timer(400, this);
-
-       statusbar =  parent.getStatusBar();
-       GameCourt = new Shape.Mino[WIDTH * HEIGHT];
-       addKeyListener(new Adapter());
+       timer = new Timer(400, this); //starts the timer at 400, and 
+       								 //Will speed up the pace as the user
+       							     //Clears more lines. 
+       
+       statusbar =parent.getStatus();
+       
+       GameCourt =new Shape.Mino[WIDTH * HEIGHT];
+        addKeyListener(new Adapter());
        clear();  
     }
     
@@ -54,33 +53,11 @@ public class GameCourt extends JPanel implements ActionListener {
         if (finishedFalling) {
             finishedFalling = false;
             newPiece();
-        } else {
-            oneLineDown();
+        } 
+       
+        else {
+            if (!tryMove(curr, currX, currY - 1)) pieceDropped();
         }
-    }
-
-	/**
-	 * Width of one of the individual squares in Minos.
-	 */
-    private int squareWidth() {
-    	return (int) getSize().getWidth() / WIDTH; 
-    }
-
-	/**
-	 * Height of one of the individual squares in Minos.
-	 */
-    private int squareHeight() { 
-    	return (int) getSize().getHeight() / HEIGHT; 
-    }
-    
-
-	/**
-	 * Returns the Mino at a particular part of a board
-	 * @param coordinates x, y
-	 * @return Mino at the particular coordinates
-	 */
-    private Shape.Mino shapeAt(int x, int y) {
-    	return GameCourt[(y * WIDTH) + x]; 
     }
 
 
@@ -93,9 +70,10 @@ public class GameCourt extends JPanel implements ActionListener {
         }
         started = true;
         finishedFalling = false;
+        
         linesRemoved = 0;
         clear();
-
+        
         newPiece();
         timer.start();
     }
@@ -123,13 +101,13 @@ public class GameCourt extends JPanel implements ActionListener {
     public void paint(Graphics g){ 
         super.paint(g);
         Dimension size = getSize();
-        int GameCourtTop = (int) size.getHeight() - HEIGHT * squareHeight();
+        int GameCourtTop = (int) size.getHeight() - HEIGHT * height();
         for (int i = 0; i < HEIGHT; ++i) {
             for (int j = 0; j < WIDTH; ++j) {
-                Shape.Mino shape = shapeAt(j, HEIGHT - i - 1);
+                Shape.Mino shape = shapeInArray(j, HEIGHT - i - 1);
                 if (shape != Shape.Mino.NONE)
-                    drawSquare(g, j * squareWidth(),
-                               GameCourtTop + i * squareHeight(), shape);
+                    draw(g, j * width(),
+                               GameCourtTop + i * height(), shape);
             }
         }
         
@@ -138,19 +116,14 @@ public class GameCourt extends JPanel implements ActionListener {
             for (int i = 0; i < 4; ++i) {
                 int newX = currX + curr.getX(i);
                 int newY = currY - curr.getY(i);
-                drawSquare(g, newX * squareWidth(),
-                           GameCourtTop + (HEIGHT - newY - 1) * squareHeight(),
+                draw(g, newX * width(),
+                           GameCourtTop + (HEIGHT - newY - 1) * height(),
                            curr.getShape());
             }
         }
     }
 
-	/**
-	 * Move current Mino down one line at a time
-	 */
-    private void oneLineDown(){
-        if (!tryMove(curr, currX, currY - 1)) pieceDropped();
-    }
+
 
 	/**
 	 * Clear the entire game
@@ -163,6 +136,7 @@ public class GameCourt extends JPanel implements ActionListener {
 	/**
 	 * Drop the current Mino to the floor if the user presses space
 	 */
+    
     private void pieceDropped(){
         for (int i = 0; i < 4; ++i) {
             int x = currX + curr.getX(i);
@@ -170,8 +144,7 @@ public class GameCourt extends JPanel implements ActionListener {
             GameCourt[(y * WIDTH) + x] = curr.getShape();
         }
         removeFull();
-        if (!finishedFalling)
-            newPiece();
+        if (!finishedFalling) newPiece();
     }
 
 	/**
@@ -179,13 +152,16 @@ public class GameCourt extends JPanel implements ActionListener {
 	 */
     private void newPiece(){
         curr.setRandom();
+        
         currX = WIDTH / 2 ;
         currY = HEIGHT - 1 + curr.minY();
+         
         if (!tryMove(curr, currX, currY)) {
             curr.setShape(Shape.Mino.NONE);
             timer.stop();
+            
             started = false;
-            statusbar.setText("Game Over! Press 'New Game' ");
+            statusbar.setText("Sorry You Lost. 'New Game' ");
         }
     }
 
@@ -198,15 +174,19 @@ public class GameCourt extends JPanel implements ActionListener {
 	 */
     private boolean tryMove(Shape newPiece, int x, int y){
         for (int i = 0; i < 4; ++i) {
+        	
             int newX = x + newPiece.getX(i);
-            int newY = y - newPiece.getY(i);
+             int newY = y - newPiece.getY(i);
+            
             if (newX < 0 || newX >= WIDTH || newY < 0 || newY >= HEIGHT)
                 return false;
-            if (shapeAt(newX, newY) != Shape.Mino.NONE)
-                return false;
+            
+             if (shapeInArray(newX, newY) != Shape.Mino.NONE)
+                    return false;
         }
 
         curr = newPiece;
+        
         currX = x;
         currY = y;
         repaint();
@@ -218,28 +198,34 @@ public class GameCourt extends JPanel implements ActionListener {
 	 */
     private void removeFull(){
         int numFullLines = 0;
-        for (int i = HEIGHT - 1; i >= 0; --i) {
-            boolean lineIsFull = true;
-            for (int j = 0; j < WIDTH; ++j) {
-                if (shapeAt(j, i) == Shape.Mino.NONE) {
-                    lineIsFull = false;
-                    break;
+         for (int i=HEIGHT-1; i>= 0;--i) {
+        	
+             boolean lineIsFull = true;
+            
+           for (int j=0;j<WIDTH; ++j) {
+            	
+                 if (shapeInArray( j,i) == Shape.Mino.NONE) {
+                     lineIsFull = false;
+                     break;
                 }
             }
 
             if (lineIsFull) {
+            	
                 ++numFullLines;
                 for (int k = i; k < HEIGHT - 1; ++k) {
                     for (int j = 0; j < WIDTH; ++j)
-                         GameCourt[(k * WIDTH) + j] = shapeAt(j, k + 1);
+                         GameCourt[(k * WIDTH) + j] = shapeInArray(j, k + 1);
                 }
             }
         }
 
         if (numFullLines > 0) {
+        	
             linesRemoved += numFullLines;
             statusbar.setText("Score: " + String.valueOf(linesRemoved));
-            finishedFalling = true;
+             finishedFalling = true;
+            
             curr.setShape(Shape.Mino.NONE);
             repaint();
         }
@@ -251,28 +237,33 @@ public class GameCourt extends JPanel implements ActionListener {
 	 * @param Coordinates of shape you're trying to draw
 	 * @param Mino you're trying to draw. 
 	 */
-    private void drawSquare(Graphics g, int x, int y, Shape.Mino shape){
+    private void draw(Graphics g, int x, int y, Shape.Mino shape){
+    	
         Color colors[] = { new Color(0, 0, 0), new Color(243, 02, 101), 
-                new Color(121, 240, 120), new Color(120, 102, 212), 
-                new Color(204, 204, 102), new Color(219, 2, 208), 
+                new Color(121, 240, 120), new Color(120,102,212), 
+                new Color(204, 204, 102), new Color(219,2, 208), 
                 new Color(112, 121, 2), new Color(213, 102, 0)
             };
 
         Color color = colors[shape.ordinal()];
+        
         g.setColor(color);
-        g.fillRect(x + 1, y + 1, squareWidth() - 2, squareHeight() - 2);
-        g.drawLine(x, y + squareHeight(), x, y);
-        g.drawLine(x, y, x + squareWidth(), y);
-        g.drawLine(x , y + squareHeight(),x + squareWidth(), y + squareHeight());
-        g.drawLine(x + squareWidth(), y + squareHeight(),x + squareWidth(), y);
+        
+        g.fillRect(x + 1, y + 1, width() - 2, height() - 2);
+        
+         g.drawLine(x , y + height(),x + width(), y + height());
+         g.drawLine(x + width(), y + height(),x + width(), y);
+         g.drawLine(x, y + height(), x, y);
+         g.drawLine(x, y, x + width(), y);
+      
     }
-
 
 	/**
 	 * KeyAdapter extension for key strokes
 	 */
     class Adapter extends KeyAdapter {
          public void keyPressed(KeyEvent e) {
+        	 
              if (!started || curr.getShape() == Shape.Mino.NONE ) return;
              if (paused) return;
              int keycode = e.getKeyCode();
@@ -287,6 +278,13 @@ public class GameCourt extends JPanel implements ActionListener {
              }
 
              switch (keycode) {
+	             case KeyEvent.VK_LEFT:
+	                 tryMove(curr, currX - 1, currY);
+	                 break;
+	                 
+	             case KeyEvent.VK_RIGHT:
+	                 tryMove(curr, currX + 1, currY);
+	                 break;
 	             case KeyEvent.VK_DOWN:
 	                 tryMove(curr.rotateRight(), currX, currY);
 	                 break;
@@ -294,6 +292,7 @@ public class GameCourt extends JPanel implements ActionListener {
 	                 tryMove(curr.rotateLeft(), currX, currY);
 	                 break;
 	             case KeyEvent.VK_SPACE:
+	            	 //When the user presses space, makes the piece fall down. 
 	            	 int newY = currY;
 	                 while (newY > 0) {
 	                     if (!tryMove(curr, currX, newY - 1))
@@ -302,18 +301,7 @@ public class GameCourt extends JPanel implements ActionListener {
 	                 }
 	                 pieceDropped();	                 
 	                 break;
-	             case KeyEvent.VK_LEFT:
-	                 tryMove(curr, currX - 1, currY);
-	                 break;
-	             case KeyEvent.VK_RIGHT:
-	                 tryMove(curr, currX + 1, currY);
-	                 break;
-	             case 'd':
-	                 oneLineDown();
-	                 break;
-	             case 'D':
-	                 oneLineDown();
-	                 break;
+	                 
 	             case 'n':
 	            	 start();
 	            	 break;
@@ -323,4 +311,28 @@ public class GameCourt extends JPanel implements ActionListener {
              }
          }
      }
+
+	/**
+	 * Width of one of the individual squares in Minos.
+	 */
+    private int width() {
+    	return (int)  getSize().getWidth() /  WIDTH; 
+    }
+
+	/**
+	 * Height of one of the individual squares in Minos.
+	 */
+    private int height( ) { 
+    	return (int) getSize().getHeight() / HEIGHT; 
+    }
+   
+	/**
+	 * Returns the Mino at a particular part of a board
+	 * @param coordinates x, y
+	 * @return Mino at the particular coordinates
+	 */
+    private Shape.Mino shapeInArray(int x, int y) {
+    	return GameCourt[(y * WIDTH) + x]; 
+    }
+
 }
