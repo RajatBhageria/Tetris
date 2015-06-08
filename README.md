@@ -1,4 +1,5 @@
 Tetris | By Rajat Bhageria 
+CIS 120 | UPenn
 
 Directions to play: 
 	To start a new game, go to 'File' and then press 'New Game'
